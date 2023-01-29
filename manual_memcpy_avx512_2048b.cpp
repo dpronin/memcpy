@@ -78,8 +78,12 @@ void memcpy_avx512_2048b(std::byte *__restrict dst,
 
 void *memcpy_avx512_2048b(std::byte *__restrict dst,
                           std::byte const *__restrict src, size_t size) {
-  for (size_t n = size >> 11; n; --n, dst += 1u << 11, src += 1u << 11)
+  for (size_t n = size >> 11; n; --n, dst += 1u << 11, src += 1u << 11) {
+    /* prefetch each 2 KiB ahead from current source position */
+    for (size_t i = 0; i < 32; ++i)
+      __builtin_prefetch(src + ((1u << 11) + (i << 6)));
     memcpy_avx512_2048b(dst, src);
+  }
   return dst;
 }
 
