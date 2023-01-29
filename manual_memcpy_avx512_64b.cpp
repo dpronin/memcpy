@@ -24,8 +24,6 @@ void *memcpy_avx512_64b(std::byte *__restrict dst,
   return dst;
 }
 
-} // anonymous namespace
-
 void manual_memcpy_avx512_64b(benchmark::State &state) {
   auto [dst, src] = prepare_buffers(state.range(0));
   for (auto _ : state) {
@@ -33,6 +31,8 @@ void manual_memcpy_avx512_64b(benchmark::State &state) {
     benchmark::ClobberMemory();
   }
 }
+
+} // anonymous namespace
 
 /* clang-format off */
 
