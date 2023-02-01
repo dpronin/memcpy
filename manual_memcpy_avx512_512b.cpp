@@ -34,7 +34,7 @@ void *memcpy_avx512_512b(std::byte *__restrict dst,
        ++i, dst += 1u << 9, src += 1u << 9) {
 
     /* prefetch each 512 bytes ahead from current source position */
-    for (size_t i = 0; i < 16; ++i)
+    for (size_t i = 0; i < 8; ++i)
       __builtin_prefetch(src + ((1u << 9) + (i << 6)));
 
     memcpy_avx512_512b(dst, src);
