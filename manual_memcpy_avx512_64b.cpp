@@ -21,8 +21,8 @@ void *memcpy_avx512_64b(std::byte *__restrict dst,
   for (size_t n = size >> 6, i = 0; i < n;
        ++i, dst += 1u << 6, src += 1u << 6) {
 
-    /* prefetch each cache-line in 64 bytes 1 KiB ahead from current source
-     * position */
+    /* prefetch each cache-line in 64B ahead from current source
+     * position with 1KiB start offset */
     __builtin_prefetch(src + (1u << 10));
 
     memcpy_avx512_64b(dst, src);

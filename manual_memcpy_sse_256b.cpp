@@ -49,7 +49,8 @@ void *memcpy_sse_256b(std::byte *__restrict dst,
   for (size_t n = size >> 8, i = 0; i < n;
        ++i, dst += 1u << 8, src += 1u << 8) {
 
-    /* prefetch each 256 bytes ahead from current source position */
+    /* prefetch each 256B ahead from current source position with 8KiB
+     * start offset */
     for (size_t i = 0; i < (1 << 2); ++i)
       __builtin_prefetch(src + (1u << 13) + (i << 6));
 
