@@ -50,7 +50,7 @@ void *memcpy_sse_256b(std::byte *__restrict dst,
        ++i, dst += 1u << 8, src += 1u << 8) {
 
     /* prefetch each 256 bytes ahead from current source position */
-    for (size_t i = 0; i < 4; ++i)
+    for (size_t i = 0; i < (1 << 2); ++i)
       __builtin_prefetch(src + ((1u << 8) + (i << 6)));
 
     memcpy_sse_256b(dst, src);
