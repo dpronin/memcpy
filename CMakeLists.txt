@@ -21,6 +21,7 @@ add_executable(${PROJECT_NAME}-bench
     manual_memcpy_avx512_64b.cpp
     manual_memcpy_avx512_512b.cpp
     manual_memcpy_avx512_2048b.cpp
+    manual_memcpy_sse_256b.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}-bench PRIVATE
