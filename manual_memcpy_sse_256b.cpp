@@ -10,38 +10,38 @@ namespace {
 
 void memcpy_sse_256b(std::byte *__restrict dst,
                      std::byte const *__restrict src) {
-  asm volatile("movdqa  %0,%%xmm0" : : "m"(src[0]));
-  asm volatile("movdqa  %0,%%xmm1" : : "m"(src[16]));
-  asm volatile("movdqa  %0,%%xmm2" : : "m"(src[32]));
-  asm volatile("movdqa  %0,%%xmm3" : : "m"(src[48]));
-  asm volatile("movdqa  %0,%%xmm4" : : "m"(src[64]));
-  asm volatile("movdqa  %0,%%xmm5" : : "m"(src[80]));
-  asm volatile("movdqa  %0,%%xmm6" : : "m"(src[96]));
-  asm volatile("movdqa  %0,%%xmm7" : : "m"(src[112]));
-  asm volatile("movdqa  %0,%%xmm8" : : "m"(src[128]));
-  asm volatile("movdqa  %0,%%xmm9" : : "m"(src[144]));
-  asm volatile("movdqa  %0,%%xmm10" : : "m"(src[160]));
-  asm volatile("movdqa  %0,%%xmm11" : : "m"(src[176]));
-  asm volatile("movdqa  %0,%%xmm12" : : "m"(src[192]));
-  asm volatile("movdqa  %0,%%xmm13" : : "m"(src[208]));
-  asm volatile("movdqa  %0,%%xmm14" : : "m"(src[224]));
-  asm volatile("movdqa  %0,%%xmm15" : : "m"(src[240]));
-  asm volatile("movntdq %%xmm0,%0" : "=m"(dst[0]));
-  asm volatile("movntdq %%xmm1,%0" : "=m"(dst[16]));
-  asm volatile("movntdq %%xmm2,%0" : "=m"(dst[32]));
-  asm volatile("movntdq %%xmm3,%0" : "=m"(dst[48]));
-  asm volatile("movntdq %%xmm4,%0" : "=m"(dst[64]));
-  asm volatile("movntdq %%xmm5,%0" : "=m"(dst[80]));
-  asm volatile("movntdq %%xmm6,%0" : "=m"(dst[96]));
-  asm volatile("movntdq %%xmm7,%0" : "=m"(dst[112]));
-  asm volatile("movntdq %%xmm8,%0" : "=m"(dst[128]));
-  asm volatile("movntdq %%xmm9,%0" : "=m"(dst[144]));
-  asm volatile("movntdq %%xmm10,%0" : "=m"(dst[160]));
-  asm volatile("movntdq %%xmm11,%0" : "=m"(dst[176]));
-  asm volatile("movntdq %%xmm12,%0" : "=m"(dst[192]));
-  asm volatile("movntdq %%xmm13,%0" : "=m"(dst[208]));
-  asm volatile("movntdq %%xmm14,%0" : "=m"(dst[224]));
-  asm volatile("movntdq %%xmm15,%0" : "=m"(dst[240]));
+  asm("movdqa  %0,%%xmm0" : : "m"(src[0]));
+  asm("movdqa  %0,%%xmm1" : : "m"(src[16]));
+  asm("movdqa  %0,%%xmm2" : : "m"(src[32]));
+  asm("movdqa  %0,%%xmm3" : : "m"(src[48]));
+  asm("movdqa  %0,%%xmm4" : : "m"(src[64]));
+  asm("movdqa  %0,%%xmm5" : : "m"(src[80]));
+  asm("movdqa  %0,%%xmm6" : : "m"(src[96]));
+  asm("movdqa  %0,%%xmm7" : : "m"(src[112]));
+  asm("movdqa  %0,%%xmm8" : : "m"(src[128]));
+  asm("movdqa  %0,%%xmm9" : : "m"(src[144]));
+  asm("movdqa  %0,%%xmm10" : : "m"(src[160]));
+  asm("movdqa  %0,%%xmm11" : : "m"(src[176]));
+  asm("movdqa  %0,%%xmm12" : : "m"(src[192]));
+  asm("movdqa  %0,%%xmm13" : : "m"(src[208]));
+  asm("movdqa  %0,%%xmm14" : : "m"(src[224]));
+  asm("movdqa  %0,%%xmm15" : : "m"(src[240]));
+  asm("movntdq %%xmm0,%0" : "=m"(dst[0]));
+  asm("movntdq %%xmm1,%0" : "=m"(dst[16]));
+  asm("movntdq %%xmm2,%0" : "=m"(dst[32]));
+  asm("movntdq %%xmm3,%0" : "=m"(dst[48]));
+  asm("movntdq %%xmm4,%0" : "=m"(dst[64]));
+  asm("movntdq %%xmm5,%0" : "=m"(dst[80]));
+  asm("movntdq %%xmm6,%0" : "=m"(dst[96]));
+  asm("movntdq %%xmm7,%0" : "=m"(dst[112]));
+  asm("movntdq %%xmm8,%0" : "=m"(dst[128]));
+  asm("movntdq %%xmm9,%0" : "=m"(dst[144]));
+  asm("movntdq %%xmm10,%0" : "=m"(dst[160]));
+  asm("movntdq %%xmm11,%0" : "=m"(dst[176]));
+  asm("movntdq %%xmm12,%0" : "=m"(dst[192]));
+  asm("movntdq %%xmm13,%0" : "=m"(dst[208]));
+  asm("movntdq %%xmm14,%0" : "=m"(dst[224]));
+  asm("movntdq %%xmm15,%0" : "=m"(dst[240]));
 }
 
 void *memcpy_sse_256b(std::byte *__restrict dst,
