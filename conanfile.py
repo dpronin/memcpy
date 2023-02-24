@@ -2,7 +2,7 @@
 
 from conans import ConanFile, CMake, tools
 
-class Mtfind(ConanFile):
+class Memcpy(ConanFile):
     name = "memcpy"
     version = "0.1.0"
     author = "Denis Pronin"
