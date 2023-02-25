@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19 FATAL_ERROR)
-project(memcpy VERSION 0.1.0 LANGUAGES CXX)
+project(memcpy VERSION 1.0.0 LANGUAGES CXX)
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Debug)
