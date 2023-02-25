@@ -9,7 +9,7 @@ from conan.errors import ConanException
 
 class Memcpy(ConanFile):
     name = "memcpy"
-    version = "0.1.0"
+    version = "1.0.0"
     author = "Denis Pronin"
     url = "https://github.com/dpronin/memcpy"
     description = "A compairing tool for memcpy"
