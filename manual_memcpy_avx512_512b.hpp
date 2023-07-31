@@ -2,8 +2,8 @@
 
 namespace detail {
 
-void memcpy_avx512_512b(std::byte *__restrict dst,
-                        std::byte const *__restrict src) {
+inline void memcpy_avx512_512b(std::byte *__restrict dst,
+                               std::byte const *__restrict src) {
   asm("vmovdqa64  %0,%%zmm0" : : "m"(src[0]));
   asm("vmovdqa64  %0,%%zmm1" : : "m"(src[64]));
   asm("vmovdqa64  %0,%%zmm2" : : "m"(src[128]));
