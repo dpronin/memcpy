@@ -1,12 +1,6 @@
 #include <cstddef>
 
-#include <benchmark/benchmark.h>
-
-#include "common.hpp"
-
-using namespace bench;
-
-namespace {
+namespace detail {
 
 void memcpy_avx512_512b(std::byte *__restrict dst,
                         std::byte const *__restrict src) {
@@ -28,8 +22,11 @@ void memcpy_avx512_512b(std::byte *__restrict dst,
   asm("vmovntdq %%zmm7,%0" : "=m"(dst[448]));
 }
 
-void *memcpy_avx512_512b(std::byte *__restrict dst,
-                         std::byte const *__restrict src, size_t size) {
+} // namespace detail
+
+constexpr auto manual_memcpy_avx512_512b = [](std::byte *__restrict dst,
+                                              std::byte const *__restrict src,
+                                              size_t size) {
   for (size_t n = size >> 9, i = 0; i < n;
        ++i, dst += 1u << 9, src += 1u << 9) {
 
@@ -38,25 +35,7 @@ void *memcpy_avx512_512b(std::byte *__restrict dst,
     for (size_t i = 0; i < (1 << 3); ++i)
       __builtin_prefetch(src + (1u << 9) + (i << 6));
 
-    memcpy_avx512_512b(dst, src);
+    detail::memcpy_avx512_512b(dst, src);
   }
   return dst;
-}
-
-void manual_memcpy_avx512_512b(benchmark::State &state) {
-  auto [dst, src] = prepare_buffers(state.range(0));
-  for (auto _ : state) {
-    memcpy_avx512_512b(dst.get(), src.get(), state.range(0));
-    benchmark::ClobberMemory();
-  }
-}
-
-} // anonymous namespace
-
-/* clang-format off */
-
-BENCHMARK(manual_memcpy_avx512_512b)
-    ->Arg(1u << 30)
-    ->Unit(benchmark::kMillisecond);
-
-/* clang-format on */
+};

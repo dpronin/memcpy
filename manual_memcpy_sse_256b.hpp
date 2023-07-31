@@ -1,15 +1,9 @@
 #include <cstddef>
 
-#include <benchmark/benchmark.h>
+namespace detail {
 
-#include "common.hpp"
-
-using namespace bench;
-
-namespace {
-
-void memcpy_sse_256b(std::byte *__restrict dst,
-                     std::byte const *__restrict src) {
+inline void memcpy_sse_256b(std::byte *__restrict dst,
+                            std::byte const *__restrict src) {
   asm("movdqa  %0,%%xmm0" : : "m"(src[0]));
   asm("movdqa  %0,%%xmm1" : : "m"(src[16]));
   asm("movdqa  %0,%%xmm2" : : "m"(src[32]));
@@ -44,8 +38,11 @@ void memcpy_sse_256b(std::byte *__restrict dst,
   asm("movntdq %%xmm15,%0" : "=m"(dst[240]));
 }
 
-void *memcpy_sse_256b(std::byte *__restrict dst,
-                      std::byte const *__restrict src, size_t size) {
+} // namespace detail
+
+constexpr auto manual_memcpy_sse_256b = [](std::byte *__restrict dst,
+                                           std::byte const *__restrict src,
+                                           size_t size) {
   for (size_t n = size >> 8, i = 0; i < n;
        ++i, dst += 1u << 8, src += 1u << 8) {
 
@@ -54,25 +51,7 @@ void *memcpy_sse_256b(std::byte *__restrict dst,
     for (size_t i = 0; i < (1 << 2); ++i)
       __builtin_prefetch(src + (1u << 13) + (i << 6));
 
-    memcpy_sse_256b(dst, src);
+    detail::memcpy_sse_256b(dst, src);
   }
   return dst;
-}
-
-void manual_memcpy_sse_256b(benchmark::State &state) {
-  auto [dst, src] = prepare_buffers(state.range(0));
-  for (auto _ : state) {
-    memcpy_sse_256b(dst.get(), src.get(), state.range(0));
-    benchmark::ClobberMemory();
-  }
-}
-
-} // anonymous namespace
-
-/* clang-format off */
-
-BENCHMARK(manual_memcpy_sse_256b)
-    ->Arg(1u << 30)
-    ->Unit(benchmark::kMillisecond);
-
-/* clang-format on */
+};

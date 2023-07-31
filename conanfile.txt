@@ -1,5 +1,5 @@
 [requires]
-benchmark/[~1.7]
+benchmark/[~1.8]
 
 [generators]
 CMakeToolchain

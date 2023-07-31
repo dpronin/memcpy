@@ -51,7 +51,7 @@ inline auto prepare_buffers(size_t sz) {
     std::terminate();
   auto dst = make_buffer(page_size, page_size, sz);
   auto src = make_buffer(page_size, page_size, sz);
-  return std::pair{move(dst), move(src)};
+  return std::pair{std::move(dst), std::move(src)};
 }
 
 } // namespace bench
