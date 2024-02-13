@@ -2,6 +2,7 @@
 #include <cstdint>
 
 #include <algorithm>
+#include <concepts>
 #include <memory>
 #include <random>
 #include <utility>
@@ -9,6 +10,15 @@
 #include <unistd.h>
 
 namespace bench {
+
+namespace detail {
+constexpr auto div_round_up(std::unsigned_integral auto x,
+                            std::unsigned_integral auto y) noexcept {
+  assert(0 != y);
+  return (x + y - 1) / y;
+}
+
+} // namespace detail
 
 template <typename T> class aligned_delete {
 public:
@@ -40,7 +50,7 @@ inline auto make_buffer(size_t align, size_t page_size, size_t sz) {
   auto buf = make_unique_aligned_bytes(align, sz);
   /* initialize a first byte of each page to prevent page faults while
    * benchmarking */
-  for (size_t i = 0, n = sz / page_size; i < n; ++i)
+  for (size_t i = 0, n = detail::div_round_up(sz, page_size); i < n; ++i)
     buf.get()[i * page_size] = static_cast<std::byte>(std::rand());
   return buf;
 }
